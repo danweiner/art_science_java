@@ -80,6 +80,7 @@ void draw() {
   
   ball.move();
   ball.display();
+  ball.collide_with_walls();
   
   for (Brick brick : bricks) {
     brick.display();
@@ -150,5 +151,19 @@ class Ball {
   void display() {
     fill(255, 0, 0);
     ellipse(x, y, diameter, diameter);
+  }
+  
+  void collide_with_walls() {
+    if (x > width || x < 0) {
+      x_direction *= -1;
+      x = x + x_speed * x_direction;
+    } else if (y < 0) {
+      y_direction *= -1;
+      y = y + y_speed * y_direction;
+    } else if (y > height) {
+      y = height/2;
+      x = width/2;
+      x_speed = 0;
+    }
   }
 }
