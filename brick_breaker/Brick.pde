@@ -3,17 +3,19 @@ class Brick {
   int y_offset;
   float x, y;
   int unit;
+  color c;
   
   // Constructor
-  Brick(int x_offset_temp, float x_temp, int y_offset_temp, float y_temp) {
+  Brick(int x_offset_temp, float x_temp, int y_offset_temp, float y_temp, color c_temp) {
     x_offset = x_offset_temp;
     y_offset = y_offset_temp;
     x = x_temp;
     y = y_temp;
+    c = c_temp;
   }
   
   void display() {
-    fill(255, 0, 0);
+    fill(c);
     rect(x_offset + x, y_offset + y, 25, 12);
   }
   

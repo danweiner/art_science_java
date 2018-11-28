@@ -49,14 +49,21 @@ void setup() {
   
   int wide_count = (width - (starting_pos*2)) / brick_width;
   println(wide_count);
-  int high_count = 5;
+  int high_count = 6;
   count = wide_count * high_count;
   bricks = new Brick[count];
   
   int index = 0;
-  for (int y = 0; y < high_count; y++) {
+  for (int y = 0; y < high_count/2; y++) {
     for (int x = 0; x < wide_count; x++) {
-      bricks[index++] = new Brick(x*brick_width, 100, y*brick_height, 100);
+      bricks[index++] = new Brick(x*brick_width, starting_pos, y*brick_height, starting_pos, color(0, 0, 255));
+    }
+  }
+  
+  for (int y = 0; y < high_count/2; y++) {
+    for (int x = 0; x < wide_count; x++) {
+      bricks[index++] = new Brick(x*brick_width, starting_pos , y*brick_height, starting_pos + 
+                        (brick_height*high_count/2) + 20, color(255, 0, 0));
     }
   }
   
@@ -161,7 +168,7 @@ class Ball {
     } else if (y > height) {
       y = -100;
       x = -100;
-      y = height/2;
+      y = 20;
       x = width/2;
       y_speed = 0;
       x_speed =0;
