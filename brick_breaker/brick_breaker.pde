@@ -45,7 +45,7 @@ void setup() {
   
   starting_pos = 100;
   
-  paddle_move = 10;
+  paddle_move = 20;
   
   int wide_count = (width - (starting_pos*2)) / brick_width;
   println(wide_count);
@@ -67,7 +67,7 @@ void setup() {
     }
   }
   
-  ball = new Ball(30, 40, 25, 1, 2, 1, 1);
+  ball = new Ball(width/2, 20, 25, -1, 1, 1, 1);
   //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
   for (Brick brick : bricks) {

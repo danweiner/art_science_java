@@ -32,7 +32,7 @@ class Brick {
     } 
     // right side
     else if (dist(other.x - other.diameter/2 - other.x_speed, other.y, x + x_offset, other.y) 
-    < other.diameter && 
+    < other.diameter/2 && 
     (other.y > y + y_offset && other.y < y + y_offset + 12)) {
       println("right side", other.x - other.diameter/2 - other.x_speed, other.y, x + x_offset, other.y);
       other.x_direction *= -1;
@@ -42,7 +42,7 @@ class Brick {
     }
     // left side
     else if (dist(other.x + other.diameter/2 + other.x_speed, other.y, x + x_offset, other.y) 
-    < other.diameter && 
+    < other.diameter/2 && 
     (other.y > y + y_offset && other.y < y + y_offset + 12)) {
       println("left side", other.x + other.diameter/2 + other.x_speed, other.y, x + x_offset, other.y);
       other.x_direction *= -1;
