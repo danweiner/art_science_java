@@ -37,13 +37,13 @@ void setup() {
   
   int wideCount = width / unit;
   int highCount = height / unit;
-  count = wideCount * highCount;
+  count = (wideCount -1) * (highCount -1);
   bricks = new Brick[count];
   
   int index = 0;
-  for (int y = 0; y < highCount; y++) {
-    for (int x = 0; x < wideCount; x++) {
-      bricks[index++] = new Brick(x*unit, unit/2, y*unit, unit/2, unit);
+  for (int y = 0; y < highCount - 1; y++) {
+    for (int x = 0; x < wideCount - 1; x++) {
+      bricks[index++] = new Brick(x*unit, unit/2, y*unit/2, unit/2, unit);
     }
   }
 }
