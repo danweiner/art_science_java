@@ -60,11 +60,12 @@ void setup() {
     }
   }
   
-  ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
+  ball = new Ball(width/2 - 30, 0, 25, 0, 2, 1, 1);
+  //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
-  //for (Brick brick : bricks) {
-  //  //println(brick.x + brick.x_offset);
-  //}
+  for (Brick brick : bricks) {
+    println(brick.x + brick.x_offset);
+  }
 }
 
 void draw() {
