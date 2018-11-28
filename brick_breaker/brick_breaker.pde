@@ -36,12 +36,15 @@ void setup() {
   paddle_move = 10;
   
   int wideCount = width / unit;
-  count = wideCount;
-  bricks = new Brick[2];
+  int highCount = height / unit;
+  count = wideCount * highCount;
+  bricks = new Brick[count];
   
   int index = 0;
-  for (int x = 0; x < 2; x++) {
-    bricks[index++] = new Brick(x*unit, unit/2, 50, unit);
+  for (int y = 0; y < highCount; y++) {
+    for (int x = 0; x < wideCount; x++) {
+      bricks[index++] = new Brick(x*unit, unit/2, y*unit, unit/2, unit);
+    }
   }
 }
 
@@ -98,9 +101,9 @@ class Brick {
   int unit;
   
   // Constructor
-  Brick(int xOffsetTemp, float xTemp, float yTemp, int tempUnit) {
+  Brick(int xOffsetTemp, float xTemp, int yOffsetTemp, float yTemp, int tempUnit) {
     xOffset = xOffsetTemp;
-    //yOffset = yOffsetTemp;
+    yOffset = yOffsetTemp;
     x = xTemp;
     y = yTemp;
     unit = tempUnit;
@@ -108,6 +111,6 @@ class Brick {
   
   void display() {
     fill(255, 0, 0);
-    rect(xOffset + x, y, 25, 12);
+    rect(xOffset + x, yOffset + y, 25, 12);
   }
 }
