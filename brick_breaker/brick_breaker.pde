@@ -60,7 +60,7 @@ void setup() {
     }
   }
   
-  ball = new Ball(width/2 - 30, height - 40, 25, 0, -2, 1, 1);
+  ball = new Ball(30, 40, 25, 1, 2, 1, 1);
   //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
   for (Brick brick : bricks) {
@@ -156,14 +156,15 @@ class Ball {
   void collide_with_walls() {
     if (x > width || x < 0) {
       x_direction *= -1;
-      x = x + x_speed * x_direction;
     } else if (y < 0) {
       y_direction *= -1;
-      y = y + y_speed * y_direction;
     } else if (y > height) {
+      y = -100;
+      x = -100;
       y = height/2;
       x = width/2;
-      x_speed = 0;
+      y_speed = 0;
+      x_speed =0;
     }
   }
 }
