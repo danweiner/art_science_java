@@ -149,7 +149,7 @@ class Ball {
   }
   
   void display() {
-    fill(255, 0, 0);
+    fill(0, 255, 0);
     ellipse(x, y, diameter, diameter);
   }
   
