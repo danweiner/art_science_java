@@ -60,7 +60,7 @@ void setup() {
     }
   }
   
-  ball = new Ball(width/2 - 30, height - 20, 25, 0, -2, 1, 1);
+  ball = new Ball(width/2 - 30, height - 40, 25, 0, -2, 1, 1);
   //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
   for (Brick brick : bricks) {
