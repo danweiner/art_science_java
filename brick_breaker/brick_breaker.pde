@@ -1,116 +1,153 @@
-int rect_x;
-int rect_y;
-int rect_w;
-int rect_h;
+int paddle_x;
+int paddle_y;
+int paddle_w;
+int paddle_h;
 
-int ball_x;
-int ball_y;
-int ball_size;
-int ball_r;
+//int ball_x;
+//int ball_y;
+//int ball_size;
+//int ball_r;
 
 int x_speed;
 int y_speed;
 
+int x_direction = 1;
+int y_direction = 1;
+
 int paddle_move;
 
-int unit = 25;
+int brick_width;;
+int brick_height;;
+int starting_pos;
 int count;
 Brick[] bricks;
+
+Ball ball;
 
 void setup() {
   size(400, 400);
   
-  rect_w = 50;
-  rect_h = 10;
-  rect_x = width/2 - rect_w/2;
-  rect_y = height - 20;
+  paddle_w = 50;
+  paddle_h = 10;
+  paddle_x = width/2 - paddle_w/2;
+  paddle_y = height - 20;
   
-  ball_x = width/2;
-  ball_y = 0;
-  ball_size = 25;
-  ball_r = ball_size/2;
+  //ball_x = width/2;
+  //ball_y = 0;
+  //ball_size = 25;
+  //ball_r = ball_size/2;
   
   x_speed = 2;
   y_speed = 2;
   
+  brick_width = 25;
+  brick_height = brick_width/2;
+  
+  starting_pos = 100;
+  
   paddle_move = 10;
   
-  int wideCount = width / unit;
-  int highCount = height / unit;
-  count = (wideCount -1) * (highCount -1);
+  int wide_count = (width - (starting_pos*2)) / brick_width;
+  println(wide_count);
+  int high_count = 5;
+  count = wide_count * high_count;
   bricks = new Brick[count];
   
   int index = 0;
-  for (int y = 0; y < highCount - 1; y++) {
-    for (int x = 0; x < wideCount - 1; x++) {
-      bricks[index++] = new Brick(x*unit, unit/2, y*unit/2, unit/2, unit);
+  for (int y = 0; y < high_count; y++) {
+    for (int x = 0; x < wide_count; x++) {
+      bricks[index++] = new Brick(x*brick_width, 100, y*brick_height, 100);
     }
   }
+  
+  ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
+   
+  //for (Brick brick : bricks) {
+  //  //println(brick.x + brick.x_offset);
+  //}
 }
 
 void draw() {
   background(224);
   fill(255);
   line(width/2, 0, width/2, height);
-  rect(rect_x, rect_y, rect_w, rect_h);
-  ellipse(ball_x, ball_y, ball_size, ball_size);
+  rect(paddle_x, paddle_y, paddle_w, paddle_h);
+  //ellipse(ball_x, ball_y, ball_size, ball_size);
   intersect();
-  move(x_speed, y_speed);
-  collideOffWalls();
+  //collideOffWalls();
+  //move();
+  
+  ball.move();
+  ball.display();
   
   for (Brick brick : bricks) {
     brick.display();
+    brick.intersect(ball);
   }
+  
 }
 
 void keyPressed() {
   if (keyCode == RIGHT) {
-    rect_x += paddle_move;
+    paddle_x += paddle_move;
   } else if (keyCode == LEFT) {
-    rect_x -= paddle_move;
+    paddle_x -= paddle_move;
   }
 }
 
 void intersect() {
-  if ((ball_y + ball_r + y_speed > rect_y) && (ball_x + ball_r + x_speed > rect_x) && 
-      (ball_x - ball_r - x_speed < rect_x + rect_w)) {
-    y_speed *= -1;
+  if ((ball.y + ball.diameter/2 + ball.y_speed > paddle_y) && 
+    (ball.x + ball.diameter/2 + ball.x_speed > paddle_x) && 
+      (ball.x - ball.diameter/2 - ball.x_speed < paddle_x + paddle_w)) {
+        println("hello");
+    ball.y_direction *= -1;
   }
 }
 
-void move(int x_s, int y_s) {
-  ball_x += x_s;
-  ball_y += y_s;
-}
+//void move() {
+//  ball_x += x_speed * x_direction;
+//  ball_y += y_speed * y_direction;
+//}
 
-void collideOffWalls() {
-  if (ball_x > width || ball_x < 0) {
-    x_speed = x_speed * -1;
-  } else if (ball_y < 0) {
-    y_speed = y_speed * -1;
-  }
-  if (ball_y > height - ball_r) {
-    ball_y = height + 100;
-  }
-}
+//void collideOffWalls() {
+//  if (ball_x > width || ball_x < 0) {
+//    println(y_direction, x_direction);
+//    x_direction *= -1;
+//  } else if (ball_y < 0) {
+//    y_direction *= -1;
+//  }
+//  if (ball_y > height - ball_r) {
+//    // give ball a fixed location off bottom of screen
+//    ball_y = height + 100;
+//    ball_x = width/2;
+//  }
+//}
 
-class Brick {
-  int xOffset;
-  int yOffset;
+
+
+class Ball {
   float x, y;
-  int unit;
+  float diameter;
+  float x_speed, y_speed;
+  int x_direction, y_direction;
   
-  // Constructor
-  Brick(int xOffsetTemp, float xTemp, int yOffsetTemp, float yTemp, int tempUnit) {
-    xOffset = xOffsetTemp;
-    yOffset = yOffsetTemp;
-    x = xTemp;
-    y = yTemp;
-    unit = tempUnit;
+  Ball(float cx, float cy, float diam_temp, float x_speed_temp, float y_speed_temp, int x_dir_temp, int y_dir_temp) {
+        x = cx;
+        y = cy;
+        diameter = diam_temp;
+        x_speed = x_speed_temp;
+        y_speed = y_speed_temp;
+        x_direction = x_dir_temp;
+        y_direction = y_dir_temp;
+      }
+      
+  void move() {
+    x = x + x_speed * x_direction;
+    y = y + y_speed * y_direction;
   }
   
   void display() {
     fill(255, 0, 0);
-    rect(xOffset + x, yOffset + y, 25, 12);
+    ellipse(x, y, diameter, diameter);
   }
 }
