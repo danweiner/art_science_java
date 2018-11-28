@@ -13,9 +13,13 @@ int y_speed;
 
 int paddle_move;
 
+int unit = 25;
+int count;
+Brick[] bricks;
 
 void setup() {
   size(400, 400);
+  
   rect_w = 50;
   rect_h = 10;
   rect_x = width/2 - rect_w/2;
@@ -25,20 +29,35 @@ void setup() {
   ball_y = 0;
   ball_size = 25;
   ball_r = ball_size/2;
+  
   x_speed = 2;
   y_speed = 2;
   
   paddle_move = 10;
+  
+  int wideCount = width / unit;
+  count = wideCount;
+  bricks = new Brick[2];
+  
+  int index = 0;
+  for (int x = 0; x < 2; x++) {
+    bricks[index++] = new Brick(x*unit, unit/2, 50, unit);
+  }
 }
 
 void draw() {
   background(224);
+  fill(255);
   line(width/2, 0, width/2, height);
   rect(rect_x, rect_y, rect_w, rect_h);
   ellipse(ball_x, ball_y, ball_size, ball_size);
   intersect();
   move(x_speed, y_speed);
   collideOffWalls();
+  
+  for (Brick brick : bricks) {
+    brick.display();
+  }
 }
 
 void keyPressed() {
@@ -69,5 +88,26 @@ void collideOffWalls() {
   }
   if (ball_y > height - ball_r) {
     ball_y = height + 100;
+  }
+}
+
+class Brick {
+  int xOffset;
+  int yOffset;
+  float x, y;
+  int unit;
+  
+  // Constructor
+  Brick(int xOffsetTemp, float xTemp, float yTemp, int tempUnit) {
+    xOffset = xOffsetTemp;
+    //yOffset = yOffsetTemp;
+    x = xTemp;
+    y = yTemp;
+    unit = tempUnit;
+  }
+  
+  void display() {
+    fill(255, 0, 0);
+    rect(xOffset + x, y, 25, 12);
   }
 }
