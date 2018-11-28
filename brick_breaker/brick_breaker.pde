@@ -8,7 +8,11 @@ int ball_y;
 int ball_size;
 int ball_r;
 
-int speed;
+int x_speed;
+int y_speed;
+
+int paddle_move;
+
 
 void setup() {
   size(400, 400);
@@ -21,6 +25,10 @@ void setup() {
   ball_y = 0;
   ball_size = 25;
   ball_r = ball_size/2;
+  x_speed = 2;
+  y_speed = 2;
+  
+  paddle_move = 10;
 }
 
 void draw() {
@@ -29,27 +37,37 @@ void draw() {
   rect(rect_x, rect_y, rect_w, rect_h);
   ellipse(ball_x, ball_y, ball_size, ball_size);
   intersect();
-  move(3);
+  move(x_speed, y_speed);
+  collideOffWalls();
 }
 
 void keyPressed() {
   if (keyCode == RIGHT) {
-    rect_x += 5;
+    rect_x += paddle_move;
   } else if (keyCode == LEFT) {
-    rect_x -= 5;
+    rect_x -= paddle_move;
   }
 }
 
 void intersect() {
-  boolean intersect_top = (ball_y + ball_r > rect_y) ;
-  boolean intersect_sides = (ball_x + ball_r > rect_x) && 
-                            (ball_x - ball_r < rect_x + rect_w);
-  if (intersect_top && intersect_sides) {
-    fill(255, 0, 0);
+  if ((ball_y + ball_r + y_speed > rect_y) && (ball_x + ball_r + x_speed > rect_x) && 
+      (ball_x - ball_r - x_speed < rect_x + rect_w)) {
+    y_speed *= -1;
   }
 }
 
-void move(int s) {
-  //ball_x += s;
-  ball_y += s;
+void move(int x_s, int y_s) {
+  ball_x += x_s;
+  ball_y += y_s;
+}
+
+void collideOffWalls() {
+  if (ball_x > width || ball_x < 0) {
+    x_speed = x_speed * -1;
+  } else if (ball_y < 0) {
+    y_speed = y_speed * -1;
+  }
+  if (ball_y > height - ball_r) {
+    ball_y = height + 100;
+  }
 }
