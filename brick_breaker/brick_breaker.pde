@@ -70,7 +70,7 @@ void setup() {
     }
   }
   
-  ball = new Ball(width/6 + 5, 20, 15, 0, 1, 1, 1);
+  ball = new Ball(width/2 + 5, 20, 15, -2, 2, 1, 1);
   //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
   //for (Brick brick : bricks) {
@@ -99,7 +99,7 @@ void draw() {
       bricks_removed++;
       println(bricks_removed);
       brick.brick_removed = false;
-      if (bricks_removed == 2) {
+      if (bricks_removed == bricks.length/2) {
         bricks_removed = 0;
         for (int i = 0; i < bricks.length/2; i++) {
           bricks[i].reset();
