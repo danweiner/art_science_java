@@ -22,6 +22,9 @@ int starting_pos;
 int count;
 Brick[] bricks;
 
+int bricks_removed;
+boolean is_finished = false;
+
 Ball ball;
 
 void setup() {
@@ -67,12 +70,12 @@ void setup() {
     }
   }
   
-  ball = new Ball(width/2, 20, 25, -1, 1, 1, 1);
+  ball = new Ball(width/6 + 5, 20, 15, 0, 1, 1, 1);
   //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
-  for (Brick brick : bricks) {
-    println(brick.x + brick.x_offset);
-  }
+  //for (Brick brick : bricks) {
+  //  println(brick.x + brick.x_offset);
+  //}
 }
 
 void draw() {
@@ -92,7 +95,29 @@ void draw() {
   for (Brick brick : bricks) {
     brick.display();
     brick.intersect(ball);
+    if (brick.brick_removed) {
+      bricks_removed++;
+      println(bricks_removed);
+      brick.brick_removed = false;
+      if (bricks_removed == 2) {
+        bricks_removed = 0;
+        for (int i = 0; i < bricks.length/2; i++) {
+          bricks[i].reset();
+          bricks[i].display();
+          println(bricks[i].x, bricks[i].y);
+          ball.return_to_start();
+        }
+      }
+    }
+    
+    //if (is_finished) {
+    //  brick.reset();
+    //  println(brick.x, brick.y);
+    //  is_finished = false;
+    //}
   }
+  
+  
   
 }
 
@@ -168,10 +193,14 @@ class Ball {
     } else if (y > height) {
       y = -100;
       x = -100;
-      y = 20;
-      x = width/2;
-      y_speed = 0;
-      x_speed =0;
+      ball.return_to_start();
     }
+  }
+  
+  void return_to_start() {
+    x = width/2;
+    y = 30;
+    y_speed = 0;
+    x_speed = 0;
   }
 }
