@@ -1,7 +1,7 @@
-int paddle_x;
-int paddle_y;
-int paddle_w;
-int paddle_h;
+float paddle_x;
+float paddle_y;
+float paddle_w;
+float paddle_h;
 
 //int ball_x;
 //int ball_y;
@@ -70,7 +70,7 @@ void setup() {
     }
   }
   
-  ball = new Ball(width/2 + 5, 20, 15, -2, 2, 1, 1);
+  ball = new Ball(width/5 + 5, 20, 15, -2, 2, 1, 1);
   //ball = new Ball(width-20, 0, 25, -1, 2, 1, 1);
    
   //for (Brick brick : bricks) {
@@ -84,7 +84,11 @@ void draw() {
   line(width/2, 0, width/2, height);
   rect(paddle_x, paddle_y, paddle_w, paddle_h);
   //ellipse(ball_x, ball_y, ball_size, ball_size);
-  intersect();
+  boolean hit = intersect_ball_rect(ball.x, ball.y, ball.diameter/2, 
+                paddle_x, paddle_y, paddle_w, paddle_h);
+  if (hit) {
+    ball.y_change_direction();
+  }
   //collideOffWalls();
   //move();
   
@@ -129,13 +133,35 @@ void keyPressed() {
   }
 }
 
-void intersect() {
-  if ((ball.y + ball.diameter/2 + ball.y_speed > paddle_y) && 
-    (ball.x + ball.diameter/2 + ball.x_speed > paddle_x) && 
-      (ball.x - ball.diameter/2 - ball.x_speed < paddle_x + paddle_w)) {
-        println("hello");
-    ball.y_direction *= -1;
+boolean intersect_ball_rect(float cx, float cy, float radius, float rx, float ry,
+                          float rw, float rh) {
+  // temporary variables to set edges for testing
+  float testX = cx;
+  float testY = cy;
+  
+  // which edge is closest?
+  if (cx < rx)          testX = rx;      // test left edge
+  else if (cx > rx+rw)  testX = rx+rw;    // test right edge  
+  if (cy < ry)          testY = ry;      // top edge
+  else if (cy > ry+rh)  testY = ry+rh;    // bottom edge
+  
+  // get distance from closest edges
+  float distX = cx-testX;
+  float distY = cy - testY;
+  float distance = sqrt( (distX*distX) + (distY*distY) );
+  
+  // collision if distance is less than radius
+  if (distance <= radius) {
+    return true;
   }
+  return false;
+  
+  //if ((ball.y + ball.diameter/2 + ball.y_speed > paddle_y) && 
+  //  (ball.x + ball.diameter/2 + ball.x_speed > paddle_x) && 
+  //    (ball.x - ball.diameter/2 - ball.x_speed < paddle_x + paddle_w)) {
+  //      println("hello");
+  //  ball.y_direction *= -1;
+  //}
 }
 
 //void move() {
@@ -202,5 +228,13 @@ class Ball {
     y = 30;
     y_speed = 0;
     x_speed = 0;
+  }
+  
+  void x_change_direction() {
+    x_direction = x_direction * -1;
+  }
+  
+  void y_change_direction() {
+    y_direction = y_direction * -1;
   }
 }
