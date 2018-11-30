@@ -58,9 +58,10 @@ boolean circleCircle(float c1x, float c1y, float c1r, float c2x, float c2y, floa
   
   // get the distance between the circles' centers
   // use the Pythagorean Theorem to compute the distance
-  float distX = c1x - c2x;
-  float distY = c1y - c2y;
-  float distance = sqrt( (distX*distX) + (distY*distY) );
+  //float distX = c1x - c2x;
+  //float distY = c1y - c2y;
+  //float distance = sqrt( (distX*distX) + (distY*distY) );
+  float distance = dist(c1x, c1y, c2x, c2y);
   
   if (distance <= c1r+c2r) {
     return true;
