@@ -50,7 +50,12 @@ void draw() {
   ellipse(c2x, c2y, c2r*2, c2r*2);
   
   // other circle, controlled by mouse
-  fill(0, 150);
+  if (hit) {
+    fill(0, 244, 155);
+  }
+  else {
+    fill(0, 150);
+  };
   ellipse(c1x, c1y, c1r*2, c1r*2);
 }
 
