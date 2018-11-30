@@ -48,12 +48,15 @@ void draw() {
   // check for collision
   // if hit, change rectangle color
   boolean hit = rectRect(s1x, s1y, s1w, s1h, s2x, s2y, s2w, s2h);
-  
+  float r= map(s1x, 0, 255, s1x, s1x - s2x);
+  float g= map(s1x, 0, 150, s1x, s1x - s2x);
+  float b= map(s1x, 0, 255, s1x, s1x - s2x);
+  println(r);
   if(hit) {
-    fill(255, 150, 0);
+    fill(255, 150, 255);
   }
   else {
-    fill(0, 150, 255);
+    fill(r, g, b);
   }
   rect(s2x, s2y, s2w, s2h);
   
