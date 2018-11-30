@@ -84,11 +84,9 @@ void draw() {
   line(width/2, 0, width/2, height);
   rect(paddle_x, paddle_y, paddle_w, paddle_h);
   //ellipse(ball_x, ball_y, ball_size, ball_size);
-  boolean hit = intersect_ball_rect(ball.x, ball.y, ball.diameter/2, 
+  intersect_ball_rect(ball.x, ball.y, ball.diameter/2, 
                 paddle_x, paddle_y, paddle_w, paddle_h);
-  if (hit) {
-    ball.y_change_direction();
-  }
+  
   //collideOffWalls();
   //move();
   
@@ -133,7 +131,7 @@ void keyPressed() {
   }
 }
 
-boolean intersect_ball_rect(float cx, float cy, float radius, float rx, float ry,
+void intersect_ball_rect(float cx, float cy, float radius, float rx, float ry,
                           float rw, float rh) {
   // temporary variables to set edges for testing
   float testX = cx;
@@ -149,12 +147,13 @@ boolean intersect_ball_rect(float cx, float cy, float radius, float rx, float ry
   float distX = cx-testX;
   float distY = cy - testY;
   float distance = sqrt( (distX*distX) + (distY*distY) );
-  
+  println(cy,distance,radius);
   // collision if distance is less than radius
   if (distance <= radius) {
-    return true;
+    println("hello");
+    ball.y_direction *= -1;
   }
-  return false;
+  
   
   //if ((ball.y + ball.diameter/2 + ball.y_speed > paddle_y) && 
   //  (ball.x + ball.diameter/2 + ball.x_speed > paddle_x) && 
