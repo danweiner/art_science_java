@@ -64,27 +64,27 @@ void draw() {
   boolean hit = pointRect(px, py, sx, sy, sw, sh);
   
   // Right and left sides
-  if (px < sx) {
-    r = map(px, 0, sx, 0, 255);
-  } else if (px > sx+sw) {
-    println("hello");
-    r = map(px, width-(sx+sw), width, 255, 0);
-  }
+  //if (px < sx) {
+  //  r = map(px, 0, sx, 0, 255);
+  //} else if (px > sx+sw) {
+  //  println("hello");
+  //  r = map(px, width-(sx+sw), width, 255, 0);
+  //}
   
-  if (py < sy) {
-    b = map(py, 0, sy, 0, 150);
-  } else if (py > sy+sh) {
-    println("hello");
-    b = map(py, width-(sy+sh), width, 150, 0);
-  }
-  println(r);
+  //if (py < sy) {
+  //  b = map(py, 0, sy, 0, 150);
+  //} else if (py > sy+sh) {
+  //  println("hello");
+  //  b = map(py, width-(sy+sh), width, 150, 0);
+  //}
+  //println(r);
   
   
   if (hit) {
     fill(255, 150, 0);
   }
   else {
-    fill(r, b, 0);
+    fill(0, 150, 255);
   }
   noStroke();
   rect(sx, sy, sw, sh);
