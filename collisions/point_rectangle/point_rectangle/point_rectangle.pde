@@ -47,6 +47,7 @@ float b;
 
 void setup() {
   size(600, 400);
+  //rectMode(CENTER);
   noCursor();
   
   strokeWeight(5);
@@ -59,32 +60,46 @@ void draw() {
   px = mouseX;
   py = mouseY;
   
-  // check for collision
-  // if hit, change rectangle color
+  //float distX= px - sx;
+  //float distY = py - sy;
+  //float distance = sqrt( (distX*distX) + (distY*distY) );
+  
+  
+  //float r = map(distance, 0, sx-sw/2, 255, 0);
+  //println(distance, sx-sw/2, r);
+  //println(distance, r);
+  //// check for collision
+  //// if hit, change rectangle color
   boolean hit = pointRect(px, py, sx, sy, sw, sh);
   
-  // Right and left sides
-  //if (px < sx) {
-  //  r = map(px, 0, sx, 0, 255);
-  //} else if (px > sx+sw) {
-  //  println("hello");
-  //  r = map(px, width-(sx+sw), width, 255, 0);
-  //}
+   //Right and left sides
+  if (px < sx) {
+    r = map(px, 0, sx, 0, 255);
+    b = 255;
+  } else if (px > sx+sw) {
+    //println("hello");
+    r = map(px, width-sw, width, 255, 0);
+    b = 255;
+  }
   
-  //if (py < sy) {
-  //  b = map(py, 0, sy, 0, 150);
-  //} else if (py > sy+sh) {
-  //  println("hello");
-  //  b = map(py, width-(sy+sh), width, 150, 0);
-  //}
-  //println(r);
+  if (py < sy) {
+    println("hi");
+    b = map(py, 0, sy, 255, 0);
+    r = 0;
+  } else if (py > sy+sh) {
+    println("hello");
+    b = map(py, height-sy, height, 0, 255);
+    r = 0;
+  }
+  println(py,sy);
+  println(r,b);
   
   
   if (hit) {
     fill(255, 150, 0);
   }
   else {
-    fill(0, 150, 255);
+    fill(r, 150, b);
   }
   noStroke();
   rect(sx, sy, sw, sh);
