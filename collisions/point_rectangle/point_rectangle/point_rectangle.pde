@@ -51,6 +51,8 @@ void setup() {
   noCursor();
   
   strokeWeight(5);
+  r = 0;
+  b = 255;
 }
 
 void draw() {
@@ -75,21 +77,21 @@ void draw() {
    //Right and left sides
   if (px < sx) {
     r = map(px, 0, sx, 0, 255);
-    b = 255;
+    b = map(px, 0, sx, 255, 0);
   } else if (px > sx+sw) {
     //println("hello");
     r = map(px, width-sw, width, 255, 0);
-    b = 255;
+    b = map(px, width-sw, width, 0, 255);
   }
   
   if (py < sy) {
     println("hi");
     b = map(py, 0, sy, 255, 0);
-    r = 0;
+    r = map(py, 0, sy, 0, 255);
   } else if (py > sy+sh) {
     println("hello");
     b = map(py, height-sy, height, 0, 255);
-    r = 0;
+    r = map(py, height-sy, height, 255, 0);
   }
   println(py,sy);
   println(r,b);
